@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Ashana ❤️</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin:0;
+  font-family:'Poppins', sans-serif;
+  background: linear-gradient(135deg,#ff9fcf,#ff70a6);
+  display:flex; justify-content:center; align-items:center; min-height:100vh;
+  overflow:hidden;
+  color:#fff;
+  text-align:center;
+  position:relative;
+}
+
+/* Cards */
+.card {
+  background: rgba(255,255,255,0.25);
+  backdrop-filter:blur(15px);
+  padding:2.5rem;
+  border-radius:30px;
+  width:90%;
+  max-width:520px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.25);
+  position:relative;
+  animation:fadeIn 0.8s ease;
+  z-index:1;
+}
+
+h1 {
+  font-weight:600;
+  text-shadow: 2px 2px 5px #ff5f87;
+}
+
+p {
+  font-weight:400;
+  color:#fff0f5;
+  text-shadow: 1px 1px 3px #ff5f87;
+  line-height:1.6;
+}
+
+button {
+  border:none;
+  padding:1rem 2rem;
+  font-size:1.2rem;
+  border-radius:40px;
+  cursor:pointer;
+  transition:all 0.3s ease;
+  box-shadow:0 8px 20px rgba(0,0,0,0.3);
+}
+.primary { background:#fff; color:#ff4f81; box-shadow:0 0 15px #ff9ac1; }
+.primary:hover { transform:scale(1.05); box-shadow:0 0 25px #ffbfd6; }
+.secondary { background:#ff4f81; color:#fff; box-shadow:0 0 15px #ff9ac1; }
+.secondary:hover { transform:scale(1.05); box-shadow:0 0 25px #ffbfd6; }
+.hidden { display:none !important; }
+
+@keyframes fadeIn {from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
+
+/* Cool Page */
+#coolPage { display:flex; flex-direction:column; align-items:center; }
+#coolPage p { font-size:2rem; margin-bottom:1rem; }
+#coolPage h1 { font-size:1.5rem; }
+
+/* Gift video page */
+#giftPage {
+  position:fixed;
+  inset:0;
+  display:none;
+  background: linear-gradient(135deg,#ff9fcf,#ff70a6);
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  z-index:5;
+  padding:1rem;
+}
+
+/* Video */
+#giftVideo {
+    max-width:80%;
+    border-radius:20px;
+    z-index:5;
+    box-shadow:0 0 25px #ffbfd6;
+}
+
+/* Caption below video */
+#videoCaption {
+  font-size:2rem;
+  margin-top:1rem;
+  color:#fff;
+  text-shadow: 2px 2px 5px #ff5f87;
+}
+
+/* Floating hearts */
+.float-item {
+  position:absolute;
+  font-size:2.5rem;
+  text-shadow: 0 0 8px #fff0f5;
+}
+
+@keyframes swirlHeart {
+  0% { transform: translate(0,0) rotate(0deg); opacity:1; }
+  50% { transform: translate(50px,-150px) rotate(180deg); opacity:0.8; }
+  100% { transform: translate(-50px,-300px) rotate(360deg); opacity:0; }
+}
+</style>
+</head>
+<body>
+
+<!-- PAGE 1 -->
+<div class="card" id="page1">
+  <h1>Hi Ashana ❤️</h1>
+  <p>Can I ask you a question?</p>
+  <div class="buttons">
+    <button class="primary" onclick="goToPage(3)">Yes</button>
+    <button class="secondary" onclick="goToPage(2)">No</button>
+  </div>
+</div>
+
+<div class="card hidden" id="page2">
+  <h1>Pretty please? 🥺</h1>
+  <p>I promise it is a good one.</p>
+  <div class="buttons">
+    <button class="primary" onclick="goToPage(3)">Yes</button>
+    <button class="primary" onclick="goToPage(3)">Yes</button>
+  </div>
+</div>
+
+<div class="card hidden" id="page3">
+  <h1>Are you super sure? 😌</h1>
+  <p>There is no turning back after this.</p>
+  <div class="buttons">
+    <button class="primary" onclick="goToPage(4)">Yes</button>
+    <button class="secondary" onclick="showModal()">No</button>
+  </div>
+</div>
+
+<div class="card hidden" id="page4">
+  <h1>I know I have to work and might not see you that day...</h1>
+  <p>But will you still be my Valentine? 💕</p>
+  <div class="buttons">
+    <button id="yesGrow" class="primary">Yes 💖</button>
+    <button id="noGrow" class="secondary">No 🙈</button>
+  </div>
+</div>
+
+<div class="card hidden" id="coolPage">
+  <p>I'm so happy you said yes, it already makes everything special 💖 You’re amazing 🥰</p>
+  <h1>Anyways… wanna see something cool? <br><small>(No, it's not a picture of me 😅)</small></h1>
+  <button id="seeCool" class="primary">Yes!</button>
+</div>
+
+<!-- GIFT VIDEO PAGE -->
+<div id="giftPage" class="hidden">
+  <video id="giftVideo" controls autoplay loop src="video.mp4" width="500">
+    Your browser does not support the video tag.
+  </video>
+  <div id="videoCaption">Look at this pretty girl 💖💖💖</div>
+</div>
+
+<div id="modalBg" class="modal-bg hidden">
+  <div class="modal">
+    <p id="modalText"></p>
+    <button class="primary" onclick="closeModal()">Okay 💕</button>
+  </div>
+</div>
+
+<script>
+// Pages navigation
+const pages = {1:document.getElementById('page1'),2:document.getElementById('page2'),3:document.getElementById('page3'),4:document.getElementById('page4'),cool:document.getElementById('coolPage')};
+function goToPage(num){ Object.values(pages).forEach(p=>p.classList.add('hidden')); pages[num].classList.remove('hidden'); }
+
+// Modal
+const modalBg=document.getElementById('modalBg');
+const modalText=document.getElementById('modalText');
+let modalIndex=0;
+const cuteMessages=["Aww do not be shy 🥺","I promise it is worth it 💕","Just one little yes 😌","My heart is waiting 💖","You know you want to 😘"];
+function showModal(){ modalText.textContent=cuteMessages[modalIndex % cuteMessages.length]; modalIndex++; modalBg.classList.remove('hidden'); }
+function closeModal(){ modalBg.classList.add('hidden'); }
+
+// Growing Yes
+const yesGrow=document.getElementById('yesGrow');
+const noGrow=document.getElementById('noGrow');
+let scale=1;
+yesGrow.addEventListener('click',()=>{ pages[4].classList.add('hidden'); pages.cool.classList.remove('hidden'); });
+noGrow.addEventListener('click',()=>{ scale+=0.3; yesGrow.style.transform=`scale(${scale})`; noGrow.style.position='absolute'; noGrow.style.left=Math.random()*200+'px'; noGrow.style.top=Math.random()*100+'px'; if(scale>3) noGrow.style.display='none'; });
+
+// Cool page -> gift
+const seeCool=document.getElementById('seeCool');
+const coolPage=document.getElementById('coolPage');
+const giftPage=document.getElementById('giftPage');
+const giftVideo=document.getElementById('giftVideo');
+seeCool.addEventListener('click',()=>{
+  coolPage.classList.add('hidden');
+  giftPage.classList.remove('hidden');
+  giftVideo.style.display='block';
+  createSwirlingHearts();
+});
+
+// Swirling hearts around video
+function createSwirlingHearts(){
+  setInterval(()=>{
+    const heart=document.createElement('div');
+    heart.textContent='💖';
+    heart.className='float-item';
+    heart.style.fontSize=20+Math.random()*25+'px';
+    heart.style.left=Math.random()*90+'%';
+    heart.style.top='90%';
+    heart.style.position='absolute';
+    heart.style.pointerEvents='none';
+    heart.style.animation=`swirlHeart ${4+Math.random()*3}s ease forwards`;
+    giftPage.appendChild(heart);
+    setTimeout(()=>heart.remove(),6000);
+  },300);
+}
+
+// Background subtle hearts
+function generateBackgroundHearts() {
+  for(let i=0;i<30;i++){
+    const heart = document.createElement('div');
+    heart.textContent='❤️';
+    heart.style.position='absolute';
+    heart.style.left=Math.random()*100+'%';
+    heart.style.top=Math.random()*100+'%';
+    heart.style.fontSize=10+Math.random()*20+'px';
+    heart.style.opacity=0.1 + Math.random()*0.3;
+    heart.style.pointerEvents='none';
+    document.body.appendChild(heart);
+  }
+}
+generateBackgroundHearts();
+</script>
+</body>
+</html>
